@@ -21,7 +21,7 @@ android {
             useSupportLibrary = true
         }
         resValue( "string", "base_url", "\"https://api.thecatapi.com/v1\"")
-        buildConfigField( "String", "x-api-key", "\"live_oUeRCWKV6G1Ww69KwN0aGijMSiBg4rjUO53E4O89F6UhtewIZ9u6ZDrtWzVgKigq\"")
+        buildConfigField( "String", "xApiKey", "\"live_oUeRCWKV6G1Ww69KwN0aGijMSiBg4rjUO53E4O89F6UhtewIZ9u6ZDrtWzVgKigq\"")
     }
 
     buildTypes {
@@ -41,6 +41,8 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
+        viewBinding = true
+        buildConfig = true
         compose = true
     }
     composeOptions {

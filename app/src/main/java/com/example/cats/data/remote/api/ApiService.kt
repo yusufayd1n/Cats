@@ -9,5 +9,5 @@ interface ApiService {
     suspend fun getCats(
         @Query("limit") limit: Int,
         @Query("page") page: Int,
-    ): CatResponse
+    ): List<CatResponse>
 }

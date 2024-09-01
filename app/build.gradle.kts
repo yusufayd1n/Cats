@@ -20,7 +20,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-        resValue( "string", "base_url", "\"https://api.thecatapi.com/v1\"")
+        resValue( "string", "base_url", "\"https://api.thecatapi.com/v1/\"")
         buildConfigField( "String", "xApiKey", "\"live_oUeRCWKV6G1Ww69KwN0aGijMSiBg4rjUO53E4O89F6UhtewIZ9u6ZDrtWzVgKigq\"")
     }
 
@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.runtime.livedata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -78,6 +79,15 @@ dependencies {
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
+
+    implementation(libs.paging.compose)
+    implementation(libs.androidx.paging.runtime)
+
+    implementation(libs.coil.compose)
+
+    implementation(libs.androidx.room.ktx)
+    annotationProcessor(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.paging)
 }
 
 kapt {

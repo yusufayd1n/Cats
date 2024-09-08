@@ -1,24 +1,21 @@
 package com.example.cats.data.repository
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import com.example.cats.data.remote.CatPagingSource
 import com.example.cats.data.remote.api.ApiService
 import com.example.cats.data.remote.models.CatResponse
 import com.example.cats.domain.repository.CatsRepository
+import com.example.cats.util.Resource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class CatsRepositoryImpl(
     private val apiService: ApiService
 ) : CatsRepository {
-    override fun getCats(): Flow<PagingData<CatResponse>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = 10,
-                enablePlaceholders = true
-            ),
-            pagingSourceFactory = { CatPagingSource(apiService) }
-        ).flow
+    override fun getCats(): Flow<Resource<List<CatResponse>>> = flow {
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(apiService.getCats()))
+        } catch (e: Exception) {
+            emit(Resource.error(e.message.toString(),null))
+        }
     }
 }

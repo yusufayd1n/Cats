@@ -80,14 +80,10 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
-    implementation(libs.paging.compose)
-    implementation(libs.androidx.paging.runtime)
-
     implementation(libs.coil.compose)
 
     implementation(libs.androidx.room.ktx)
     annotationProcessor(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.paging)
 }
 
 kapt {

@@ -1,5 +1,8 @@
 package com.example.cats.data.remote.models
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class CatResponse(
     val adaptability: Int,
     val affection_level: Int,
@@ -42,13 +45,14 @@ data class CatResponse(
     val weight: Weight,
     val wikipedia_url: String
 ) {
+    @Serializable
     data class Image(
         val height: Int,
         val id: String,
         val url: String?,
         val width: Int
     )
-
+    @Serializable
     data class Weight(
         val imperial: String,
         val metric: String

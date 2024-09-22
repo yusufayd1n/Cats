@@ -80,7 +80,8 @@ dependencies {
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
-
+    implementation(libs.androidx.hilt.navigation.compose)
+    
     implementation(libs.coil.compose)
 
     implementation(libs.androidx.room.ktx)
@@ -88,6 +89,8 @@ dependencies {
 
     implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+
+
 }
 
 kapt {

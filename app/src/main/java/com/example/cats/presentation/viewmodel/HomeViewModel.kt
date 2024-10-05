@@ -1,11 +1,11 @@
 package com.example.cats.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cats.data.remote.api.ApiResult
 import com.example.cats.data.remote.models.CatResponse
 import com.example.cats.domain.usecase.GetCatsUseCase
-import com.example.cats.util.Resource
+import com.example.cats.presentation.state.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -18,16 +18,26 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getCatsUseCase: GetCatsUseCase
 ) : ViewModel() {
-    private val _allCats = MutableStateFlow<Resource<List<CatResponse>>>(Resource.loading(null))
-    val allCats: StateFlow<Resource<List<CatResponse>>> = _allCats
+    private val _allCats = MutableStateFlow<UIState<List<CatResponse>>>(UIState.Loading)
+    val allCats: StateFlow<UIState<List<CatResponse>>> = _allCats
 
 
     fun getAllCats() {
         viewModelScope.launch(Dispatchers.IO) {
-            getCatsUseCase.invoke().catch {
-                Log.d("YUSUFAYDIN", it.toString())
-            }.collect { cats ->
-                _allCats.value = cats
+            getCatsUseCase.invoke().catch {}.collect { response ->
+                when (response) {
+                    is ApiResult.Error -> {
+                        _allCats.value = UIState.Error(response.exception.message ?: "Unkown Error")
+                    }
+
+                    ApiResult.Loading -> {
+                        _allCats.value = UIState.Loading
+                    }
+
+                    is ApiResult.Success -> {
+                        _allCats.value = UIState.Success(response.data)
+                    }
+                }
             }
         }
     }

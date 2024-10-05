@@ -25,19 +25,34 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.cats.data.remote.models.CatResponse
 import com.example.cats.presentation.navigation.screenRoutes.Screen
+import com.example.cats.presentation.state.UIState
 import com.example.cats.presentation.viewmodel.HomeViewModel
-import com.example.cats.util.Status
 
 @Composable
 fun HomeScreen(
     navController: NavController
 ) {
     val viewModel: HomeViewModel = hiltViewModel()
+    val catsState by viewModel.allCats.collectAsState()
     LaunchedEffect(Unit) {
         viewModel.getAllCats()
     }
-    ObserveCats(viewModel) {
-        navController.navigate(Screen.Detail.route)
+
+    when (val data = catsState) {
+        is UIState.Loading -> LoadingScreen()
+        is UIState.Success -> {
+            data.data.let { cats ->
+                LazyColumn {
+                    items(cats) { cat ->
+                        CatItem(cat) {
+                            navController.navigate(Screen.Detail.route)
+                        }
+                    }
+                }
+            }
+        }
+
+        is UIState.Error -> ErrorScreen(Modifier, data.message)
     }
 }
 
@@ -68,30 +83,6 @@ fun CatItem(cat: CatResponse, onClick: () -> Unit) {
                 style = MaterialTheme.typography.bodySmall,
                 overflow = TextOverflow.Ellipsis
             )
-        }
-    }
-}
-
-@Composable
-fun ObserveCats(viewModel: HomeViewModel, onClick: () -> Unit) {
-    val catsState by viewModel.allCats.collectAsState()
-    when (catsState.status) {
-        Status.LOADING -> {
-            LoadingScreen()
-        }
-
-        Status.ERROR -> {
-            ErrorScreen(errorMessage = catsState.message.toString())
-        }
-
-        Status.SUCCESS -> {
-            catsState.data?.let { cats ->
-                LazyColumn {
-                    items(cats) { cat ->
-                        CatItem(cat, onClick)
-                    }
-                }
-            }
         }
     }
 }

@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 
 @Composable
 fun ErrorScreen(
@@ -16,8 +17,8 @@ fun ErrorScreen(
     Box(
         modifier = modifier
             .fillMaxSize(),
-        contentAlignment = Alignment.Center,
+        contentAlignment = Alignment.Center
     ) {
-        Text(text = errorMessage, color = Color.Red)
+        Text(text = errorMessage, color = Color.Red, textAlign = TextAlign.Center)
     }
 }

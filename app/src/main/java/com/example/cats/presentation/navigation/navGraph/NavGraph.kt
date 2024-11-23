@@ -1,13 +1,17 @@
 package com.example.cats.presentation.navigation.navGraph
 
 import androidx.compose.runtime.Composable
-
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.cats.presentation.navigation.screenRoutes.Screen
+import androidx.navigation.toRoute
+import com.example.cats.data.remote.models.CatResponse
+import com.example.cats.presentation.navigation.screenRoutes.DetailScreenRoute
+import com.example.cats.presentation.navigation.screenRoutes.HomeScreenRoute
 import com.example.cats.presentation.view.DetailScreen
 import com.example.cats.presentation.view.HomeScreen
+import com.example.cats.util.CustomNavType
+import kotlin.reflect.typeOf
 
 @Composable
 fun SetUpNavGraph(
@@ -15,14 +19,19 @@ fun SetUpNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route
+        startDestination = HomeScreenRoute
     ) {
-        composable(Screen.Home.route) {
+        composable<HomeScreenRoute> {
             HomeScreen(navController)
         }
 
-        composable(Screen.Detail.route) {
-            DetailScreen()
+        composable<DetailScreenRoute>(
+            typeMap = mapOf(
+                typeOf<CatResponse>() to CustomNavType.CatType
+            )
+        ) { backStackEntry ->
+            val args = backStackEntry.toRoute<DetailScreenRoute>()
+            DetailScreen(args.cat)
         }
     }
 }

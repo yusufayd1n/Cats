@@ -24,9 +24,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.cats.data.remote.models.CatResponse
-import com.example.cats.presentation.navigation.screenRoutes.Screen
+import com.example.cats.presentation.navigation.screenRoutes.DetailScreenRoute
 import com.example.cats.presentation.state.UIState
 import com.example.cats.presentation.viewmodel.HomeViewModel
+import com.google.gson.Gson
 
 @Composable
 fun HomeScreen(
@@ -45,7 +46,7 @@ fun HomeScreen(
                 LazyColumn {
                     items(cats) { cat ->
                         CatItem(cat) {
-                            navController.navigate(Screen.Detail.route)
+                            navController.navigate(DetailScreenRoute(cat))
                         }
                     }
                 }
@@ -77,9 +78,9 @@ fun CatItem(cat: CatResponse, onClick: () -> Unit) {
                 .height(128.dp)
                 .padding(start = 4.dp)
         ) {
-            Text(text = cat.name, style = MaterialTheme.typography.headlineMedium)
+            Text(text = cat.name.toString(), style = MaterialTheme.typography.headlineMedium)
             Text(
-                text = cat.description,
+                text = cat.description.toString(),
                 style = MaterialTheme.typography.bodySmall,
                 overflow = TextOverflow.Ellipsis
             )

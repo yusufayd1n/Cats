@@ -27,7 +27,6 @@ import com.example.cats.data.remote.models.CatResponse
 import com.example.cats.presentation.navigation.screenRoutes.DetailScreenRoute
 import com.example.cats.presentation.state.UIState
 import com.example.cats.presentation.viewmodel.HomeViewModel
-import com.google.gson.Gson
 
 @Composable
 fun HomeScreen(

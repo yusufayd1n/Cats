@@ -1,10 +1,10 @@
 # CATS APP
 ---------------------
-The Cats app is an Android application thats shows a lot of cats breeds and gives you information about cats.The app is designed with a focus on modern Android development practices, utilizing MVVM architecture, Jetpack Compose, and various powerful libraries for a clean and maintainable codebase.
+The Cats app is an Android application thats shows a lot of cats breeds and gives you information about cats. The app is designed with a focus on modern Android development practices, utilizing MVVM architecture, Jetpack Compose, and various powerful libraries for a clean and maintainable codebase.
 
 **Features**
 ---------------------
-- **Cat**s: See all of the cat breeds and everything about them.
+- **Cats**: See all of the cat breeds and everything about them.
 - **Wikipedia**: Read everything about the cat you interested.
 - **Modern UI**: Built with Jetpack Compose for a smooth and dynamic user interface.
 - **Clean Architecture**: Separation of concerns with MVVM and Clean Architecture patterns.
